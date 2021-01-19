@@ -1,4 +1,4 @@
-package com.dj.easyrouter.compiler.modle;
+package com.dj.easyrouter.model;
 
 import com.dj.easyrouter.annotation.EasyRoute;
 

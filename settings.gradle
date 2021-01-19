@@ -1,5 +1,5 @@
-include ':easyRouter-compiler'
 include ':easyRouter-annotation'
+include ':easyRouter-compiler'
 include ':easyRouter-core'
 include ':app'
 rootProject.name = "EasyRouter"

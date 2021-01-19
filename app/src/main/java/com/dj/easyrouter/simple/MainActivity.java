@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.dj.easyrouter.annotation.EasyRoute;
 
-@EasyRoute("/aaa/bbb")
+@EasyRoute(path = "/main/main")
 public class MainActivity extends AppCompatActivity {
 
     @Override
