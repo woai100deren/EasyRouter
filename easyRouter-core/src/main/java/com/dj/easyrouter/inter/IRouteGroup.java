@@ -1,4 +1,4 @@
-package com.dj.easyrouter.template;
+package com.dj.easyrouter.inter;
 
 import com.dj.easyrouter.model.EasyRouteMeta;
 import java.util.Map;
