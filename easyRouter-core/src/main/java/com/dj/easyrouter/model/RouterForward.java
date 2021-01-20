@@ -1,5 +1,6 @@
 package com.dj.easyrouter.model;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 
@@ -7,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.dj.easyrouter.EasyRouter;
+import com.dj.easyrouter.R;
+import com.dj.easyrouter.callback.NavigationCallback;
 import com.dj.easyrouter.inter.IService;
 
 import java.util.ArrayList;
@@ -240,7 +243,50 @@ public class RouterForward extends EasyRouteMeta{
         this.service = service;
     }
 
+    /**
+     * 简单跳转
+     * @return
+     */
     public Object navigation() {
         return EasyRouter.getInstance().navigation(null, this, -1, null);
+    }
+
+    /**
+     * 简单跳转
+     * @return
+     */
+    public Object navigation(Context context) {
+        return EasyRouter.getInstance().navigation(context, this, -1, null);
+    }
+
+    /**
+     * 页面跳转
+     * @param context
+     * @param callback 跳转事件的回调（注意不是页面跳转返回的回调）
+     * @return
+     */
+    public Object navigation(Context context, NavigationCallback callback) {
+        return EasyRouter.getInstance().navigation(context, this, -1, callback);
+    }
+
+    /**
+     * 页面跳转 forResult
+     * @param context
+     * @param requestCode
+     * @return
+     */
+    public Object navigationForResult(Context context, int requestCode) {
+        return EasyRouter.getInstance().navigation(context, this, requestCode, null);
+    }
+
+    /**
+     * 页面跳转 forResult
+     * @param context
+     * @param requestCode
+     * @param callback 跳转事件的回调（注意不是页面跳转返回的回调）
+     * @return
+     */
+    public Object navigationForResult(Context context, int requestCode, NavigationCallback callback) {
+        return EasyRouter.getInstance().navigation(context, this, requestCode, callback);
     }
 }

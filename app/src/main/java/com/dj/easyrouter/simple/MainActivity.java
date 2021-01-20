@@ -1,8 +1,11 @@
 package com.dj.easyrouter.simple;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.dj.easyrouter.EasyRouter;
@@ -31,8 +34,18 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.jumpBm2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EasyRouter.getInstance().build("/module2/main").withString("value2","123456").navigation();
+                EasyRouter.getInstance().build("/module2/main").withString("value2","123456").navigationForResult(MainActivity.this,333);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == 333) {
+                Log.e("1111111111", "返回结果：" + data.getStringExtra("result"));
+            }
+        }
     }
 }
