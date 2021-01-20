@@ -2,7 +2,9 @@ package com.dj.easyrouter.compiler.utils;
 
 public class Constant {
     public static final String ACTIVITY = "android.app.Activity";
-    public static final String ISERVICE = "com.dj.easyrouter.inter.IService";
+    public static final String FRAGMENT = "android.app.Fragment";
+    public static final String FRAGMENT_V4 = "android.support.v4.app.Fragment";
+    public static final String SERVICE = "android.app.Service";
 
     public static final String ARGUMENTS_NAME = "moduleName";
     public static final String ANNOTATION_TYPE_ROUTE = "com.dj.easyrouter.annotation.EasyRoute";

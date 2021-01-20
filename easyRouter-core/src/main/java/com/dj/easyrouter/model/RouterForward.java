@@ -244,6 +244,22 @@ public class RouterForward extends EasyRouteMeta{
     }
 
     /**
+     * 用于停止service
+     * @return
+     */
+    public Object stopNavigation(){
+        return EasyRouter.getInstance().stopNavigation(null, this, null);
+    }
+
+    /**
+     * 用于停止service
+     * @return
+     */
+    public Object stopNavigation(Context context){
+        return EasyRouter.getInstance().stopNavigation(context, this, null);
+    }
+
+    /**
      * 简单跳转
      * @return
      */

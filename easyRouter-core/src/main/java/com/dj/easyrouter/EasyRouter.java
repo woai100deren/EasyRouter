@@ -147,6 +147,35 @@ public class EasyRouter {
         }
     }
 
+    /**
+     * 用于停止service
+     * @param context
+     * @param routerForward
+     * @param callback
+     * @return
+     */
+    public Object stopNavigation(final Context context, final RouterForward routerForward, final NavigationCallback callback) {
+        if (callback != null) {
+            InterceptorImpl.onInterceptions(routerForward, new InterceptorCallback() {
+                @Override
+                public void onNext(RouterForward routerForward) {
+                    _stopNavigation(context, routerForward, callback);
+                }
+
+                @Override
+                public void onInterrupt(String interruptMsg) {
+
+                    callback.onInterrupt(new Throwable(interruptMsg));
+                }
+            });
+        }else{
+
+            return _stopNavigation(context, routerForward, callback);
+        }
+        return null;
+    }
+
+
 
     public Object navigation(final Context context, final RouterForward routerForward, final int requestCode, final NavigationCallback callback) {
         if (callback != null) {
@@ -165,6 +194,56 @@ public class EasyRouter {
         }else{
 
             return _navigation(context, routerForward, requestCode, callback);
+        }
+        return null;
+    }
+
+    /**
+     * 停止service
+     * @param context
+     * @param routerForward
+     * @param callback
+     * @return
+     */
+    protected Object _stopNavigation(final Context context, final RouterForward routerForward, final NavigationCallback callback) {
+        try {
+            prepareCard(routerForward);
+        } catch (NoRouteFoundException e) {
+            e.printStackTrace();
+            //没找到
+            if (null != callback) {
+                callback.onLost(routerForward);
+            }
+            return null;
+        }
+        if (null != callback) {
+            callback.onFound(routerForward);
+        }
+
+        switch (routerForward.getType()) {
+            case SERVICE:{
+                Context currentContext = null == context ? mContext : context;
+                Intent intent = new Intent(currentContext, routerForward.getDestination());
+                intent.putExtras(routerForward.getExtras());
+                int flags = routerForward.getFlag();
+                if (-1 != flags) {
+                    intent.setFlags(flags);
+                }
+                //主线程中进行跳转操作
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        currentContext.stopService(intent);
+                        //跳转完成
+                        if (null != callback) {
+                            callback.onArrival(routerForward);
+                        }
+                    }
+                });
+                break;
+            }
+            default:
+                break;
         }
         return null;
     }
@@ -193,9 +272,9 @@ public class EasyRouter {
         }
 
         switch (routerForward.getType()) {
-            case ACTIVITY:
-                final Context currentContext = null == context ? mContext : context;
-                final Intent intent = new Intent(currentContext, routerForward.getDestination());
+            case ACTIVITY: {
+                Context currentContext = null == context ? mContext : context;
+                Intent intent = new Intent(currentContext, routerForward.getDestination());
                 intent.putExtras(routerForward.getExtras());
                 int flags = routerForward.getFlag();
                 if (-1 != flags) {
@@ -209,8 +288,7 @@ public class EasyRouter {
                     public void run() {
                         //可能需要返回码
                         if (requestCode > 0) {
-                            ActivityCompat.startActivityForResult((Activity) currentContext, intent,
-                                    requestCode, routerForward.getOptionsBundle());
+                            ActivityCompat.startActivityForResult((Activity) currentContext, intent, requestCode, routerForward.getOptionsBundle());
                         } else {
                             ActivityCompat.startActivity(currentContext, intent, routerForward.getOptionsBundle());
                         }
@@ -228,8 +306,31 @@ public class EasyRouter {
                     }
                 });
                 break;
-            case ISERVICE:
-                return routerForward.getService();
+            }
+            case SERVICE:{
+                Context currentContext = null == context ? mContext : context;
+                Intent intent = new Intent(currentContext, routerForward.getDestination());
+                intent.putExtras(routerForward.getExtras());
+                int flags = routerForward.getFlag();
+                if (-1 != flags) {
+                    intent.setFlags(flags);
+                }else if (!(currentContext instanceof Activity)) {
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+                //主线程中进行跳转操作
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        currentContext.startService(intent);
+                        //跳转完成
+                        if (null != callback) {
+                            callback.onArrival(routerForward);
+                        }
+                    }
+                });
+//                return routerForward.getService();
+                break;
+            }
             default:
                 break;
         }
@@ -262,23 +363,23 @@ public class EasyRouter {
             //类 要跳转的activity 或IService实现类
             routerForward.setDestination(routeMeta.getDestination());
             routerForward.setType(routeMeta.getType());
-            switch (routeMeta.getType()) {
-                case ISERVICE:
-                    Class<?> destination = routeMeta.getDestination();
-                    IService service = DataWarehouse.services.get(destination);
-                    if (null == service) {
-                        try {
-                            service = (IService) destination.getConstructor().newInstance();
-                            DataWarehouse.services.put(destination, service);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    routerForward.setService(service);
-                    break;
-                default:
-                    break;
-            }
+//            switch (routeMeta.getType()) {
+//                case SERVICE:
+//                    Class<?> destination = routeMeta.getDestination();
+//                    IService service = DataWarehouse.services.get(destination);
+//                    if (null == service) {
+//                        try {
+//                            service = (IService) destination.getConstructor().newInstance();
+//                            DataWarehouse.services.put(destination, service);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    routerForward.setService(service);
+//                    break;
+//                default:
+//                    break;
+//            }
         }
     }
 }

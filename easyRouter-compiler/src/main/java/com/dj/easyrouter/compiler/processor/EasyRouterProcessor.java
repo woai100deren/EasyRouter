@@ -106,7 +106,7 @@ public class EasyRouterProcessor extends AbstractProcessor {
     private void processorRoute(Set<? extends Element> rootElements) {
         //获得Activity这个类的节点信息
         TypeElement activity = elementUtils.getTypeElement(Constant.ACTIVITY);
-        TypeElement service = elementUtils.getTypeElement(Constant.ISERVICE);
+        TypeElement service = elementUtils.getTypeElement(Constant.SERVICE);
 
         for (Element element : rootElements) {
             EasyRouteMeta routeMeta;
@@ -117,7 +117,7 @@ public class EasyRouterProcessor extends AbstractProcessor {
             if (typeUtils.isSubtype(typeMirror, activity.asType())) {
                 routeMeta = new EasyRouteMeta(EasyRouteMeta.Type.ACTIVITY, route, element);
             } else if (typeUtils.isSubtype(typeMirror, service.asType())) {
-                routeMeta = new EasyRouteMeta(EasyRouteMeta.Type.ISERVICE, route, element);
+                routeMeta = new EasyRouteMeta(EasyRouteMeta.Type.SERVICE, route, element);
             }
             else {
                 throw new RuntimeException("Just support Activity or IService Route: " + element);

@@ -37,6 +37,18 @@ public class MainActivity extends AppCompatActivity {
                 EasyRouter.getInstance().build("/module2/main").withString("value2","123456").navigationForResult(MainActivity.this,333);
             }
         });
+        findViewById(R.id.startService).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EasyRouter.getInstance().build("/app/myService").navigation();
+            }
+        });
+        findViewById(R.id.stopService).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EasyRouter.getInstance().build("/app/myService").stopNavigation();
+            }
+        });
     }
 
     @Override
@@ -47,5 +59,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("1111111111", "返回结果：" + data.getStringExtra("result"));
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
