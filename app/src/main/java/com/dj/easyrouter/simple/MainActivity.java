@@ -49,6 +49,18 @@ public class MainActivity extends AppCompatActivity {
                 EasyRouter.getInstance().build("/app/myService").stopNavigation();
             }
         });
+        findViewById(R.id.startBm1Service).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EasyRouter.getInstance().build("/module1/myService").navigation();
+            }
+        });
+        findViewById(R.id.stopBm1Service).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EasyRouter.getInstance().build("/module1/myService").stopNavigation();
+            }
+        });
     }
 
     @Override

@@ -46,4 +46,21 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/startService" />
+
+    <Button
+        android:id="@+id/startBm1Service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动业务服务"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stopService" />
+    <Button
+        android:id="@+id/stopBm1Service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="停止业务服务"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startBm1Service" />
 </androidx.constraintlayout.widget.ConstraintLayout>

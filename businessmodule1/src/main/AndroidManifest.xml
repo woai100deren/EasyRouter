@@ -4,6 +4,8 @@
 
     <application>
         <activity android:name=".MainActivity"/>
+
+        <service android:name=".MyService" />
     </application>
 
 </manifest>
