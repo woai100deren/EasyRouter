@@ -1,3 +1,5 @@
+include ':businessmodule2'
+include ':businessmodule1'
 include ':easyRouter-annotation'
 include ':easyRouter-compiler'
 include ':easyRouter-core'

@@ -47,4 +47,9 @@ dependencies {
 
     implementation project(":easyRouter-core")
     annotationProcessor project(":easyRouter-compiler")
+
+    if (isModule) {
+        implementation project(':businessmodule1')
+        implementation project(':businessmodule2')
+    }
 }

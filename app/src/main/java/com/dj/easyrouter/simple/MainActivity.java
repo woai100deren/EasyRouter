@@ -22,5 +22,17 @@ public class MainActivity extends AppCompatActivity {
                 EasyRouter.getInstance().build("/app/second").withString("value","123456").navigation();
             }
         });
+        findViewById(R.id.jumpBm1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EasyRouter.getInstance().build("/module1/main").withString("value1","123456").navigation();
+            }
+        });
+        findViewById(R.id.jumpBm2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EasyRouter.getInstance().build("/module2/main").withString("value2","123456").navigation();
+            }
+        });
     }
 }
