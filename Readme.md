@@ -8,6 +8,7 @@
 - ``easyRouter-core``：路由框架主module
 - ``easyRouter-annotation``：路由框架注解module
 - ``easyRouter-compiler``：注解处理器
+- `module-java-export`：中间module，主要用于编写module之间数据交互时的provider接口
 
 **二、组件化说明：**
 
@@ -105,6 +106,8 @@
 
 **三、路由框架使用**
 
+##### 1.基础配置
+
 - 在需要使用路由框架的主module或者业务module中，``build.gradle``下添加：
 
   ```java
@@ -142,6 +145,8 @@
   }
   ```
 
+##### 2.Activity跳转
+
 - 在需要用到路由跳转的Activity页面中，添加注解``EasyRoute``。其中，path的值必须唯一，path即后续要用到的跳转链接。
 
   ```java
@@ -174,6 +179,8 @@
       .navigationForResult(MainActivity.this,123);
   ```
 
+##### 3.对Fragment的支持
+
 - 对`Fragment`的支持：
 
   ```java
@@ -184,6 +191,8 @@
   ```
 
   通过上述方式获取到fragment对象，获取到的`fragment`是`android.app.Fragment`还是`android.support.v4.app.Fragment`，需要看对方创建的Fragment是什么类型。
+
+##### 4.对Android Service的支持
 
 - 调用`service`
 
@@ -198,3 +207,47 @@
   ```java
   EasyRouter.getInstance().build("/module1/myService").stopNavigation();
   ```
+
+##### 5.对module之间数据交互的支持
+
+​	比如两个module：A、B，如果AB之间要进行简单数据交互（获取），则可使用到下面的provder
+
+- 新建一个中转module，比如例子中的`module-java-export`，同时，AB两个module引用
+
+  ```java
+  implementation project(":module-java-export")
+  ```
+
+- 中转module中，编写接口类，必须继承`IProvider`类
+
+  ```java
+  public interface HelloService extends IProvider {
+      void sayHello(String name);
+  }
+  ```
+
+- 在B的module中，实现此接口，并加上注解
+
+  ```java
+  @EasyRoute(path = "/module2/helloService")
+  public class HelloServiceIml implements HelloService {
+      @Override
+      public void sayHello(String name) {
+          Log.e("HelloService", "Hello " + name);
+      }
+  
+      @Override
+      public void init(Context context) {
+          Log.e("HelloService", HelloService.class.getName() + " has init.");
+      }
+  }
+  ```
+
+- 在A的module中使用
+
+  ```java
+  HelloService helloService = (HelloService)EasyRouter.getInstance()
+      .build("/module2/helloService").navigation();
+  helloService.sayHello("world");
+  ```
+
