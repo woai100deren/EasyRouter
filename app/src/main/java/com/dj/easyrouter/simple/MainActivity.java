@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.dj.easyrouter.EasyRouter;
 import com.dj.easyrouter.annotation.EasyRoute;
+import com.dj.easyrouter.export.HelloService;
 
 @EasyRoute(path = "/app/main")
 public class MainActivity extends AppCompatActivity {
@@ -65,6 +66,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,FragmentActivity.class));
+            }
+        });
+        findViewById(R.id.postInfoToBm2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Object object = EasyRouter.getInstance().build("/module2/helloService").navigation();
+                Log.e("123",object.toString());
+                HelloService helloService = (HelloService)object;
+                helloService.sayHello("a xi ba");
             }
         });
     }

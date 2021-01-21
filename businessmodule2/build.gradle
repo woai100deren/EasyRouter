@@ -56,4 +56,6 @@ dependencies {
 
     implementation project(":easyRouter-core")
     annotationProcessor project(":easyRouter-compiler")
+
+    implementation project(":module-java-export")
 }

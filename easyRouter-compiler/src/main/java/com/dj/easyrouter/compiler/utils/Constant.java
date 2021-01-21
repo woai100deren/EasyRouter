@@ -6,11 +6,13 @@ public class Constant {
     public static final String FRAGMENT_V4 = "android.support.v4.app.Fragment";
     public static final String SERVICE = "android.app.Service";
 
+
     public static final String ARGUMENTS_NAME = "moduleName";
     public static final String ANNOTATION_TYPE_ROUTE = "com.dj.easyrouter.annotation.EasyRoute";
 
     public static final String IROUTE_GROUP = "com.dj.easyrouter.inter.IRouteGroup";
     public static final String IROUTE_ROOT = "com.dj.easyrouter.inter.IRouteRoot";
+    public static final String IPROVIDER = "com.dj.easyrouter.inter.IProvider";
 
     public static final String METHOD_LOAD_INFO = "loadInfo";
 

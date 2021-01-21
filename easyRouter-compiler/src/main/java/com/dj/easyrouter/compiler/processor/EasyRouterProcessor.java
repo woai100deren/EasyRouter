@@ -109,6 +109,7 @@ public class EasyRouterProcessor extends AbstractProcessor {
         TypeElement service = elementUtils.getTypeElement(Constant.SERVICE);
         TypeElement fragment = elementUtils.getTypeElement(Constant.FRAGMENT);
         TypeElement fragment_v4 = elementUtils.getTypeElement(Constant.FRAGMENT_V4);
+        TypeElement provider = elementUtils.getTypeElement(Constant.IPROVIDER);
 
         for (Element element : rootElements) {
             EasyRouteMeta routeMeta;
@@ -122,9 +123,11 @@ public class EasyRouterProcessor extends AbstractProcessor {
                 routeMeta = new EasyRouteMeta(EasyRouteMeta.Type.SERVICE, route, element);
             } else if (typeUtils.isSubtype(typeMirror, fragment.asType()) || typeUtils.isSubtype(typeMirror, fragment_v4.asType())) {
                 routeMeta = new EasyRouteMeta(EasyRouteMeta.Type.FRAGMENT, route, element);
+            } else if (typeUtils.isSubtype(typeMirror, provider.asType()) ) {
+                routeMeta = new EasyRouteMeta(EasyRouteMeta.Type.PROVIDER, route, element);
             }
             else {
-                throw new RuntimeException("Just support Activity or Service or fragment Route: " + element);
+                throw new RuntimeException("Just support Activity or Service or fragment or provider Route: " + element);
             }
             categories(routeMeta);
         }

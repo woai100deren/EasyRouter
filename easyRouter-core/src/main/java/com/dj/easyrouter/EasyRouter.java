@@ -16,6 +16,7 @@ import com.dj.easyrouter.callback.NavigationCallback;
 import com.dj.easyrouter.data.DataWarehouse;
 import com.dj.easyrouter.exception.NoRouteFoundException;
 import com.dj.easyrouter.impl.InterceptorImpl;
+import com.dj.easyrouter.inter.IProvider;
 import com.dj.easyrouter.model.EasyRouteMeta;
 import com.dj.easyrouter.model.RouterForward;
 import com.dj.easyrouter.inter.IRouteGroup;
@@ -101,7 +102,7 @@ public class EasyRouter {
             }
 //            else if (className.startsWith(ROUTE_ROOT_PAKCAGE + "." + SDK_NAME + SEPARATOR + SUFFIX_INTERCEPTOR)) {
 //
-//                ((IInterceptorGroup) Class.forName(className).getConstructor().newInstance()).loadInto(Warehouse.interceptorsIndex);
+//                ((IInterceptorGroup) Class.forName(className).getConstructor().newInstance()).loadInto(DataWarehouse.interceptorsIndex);
 //            }
         }
     }
@@ -177,11 +178,12 @@ public class EasyRouter {
 
 
     public Object navigation(final Context context, final RouterForward routerForward, final int requestCode, final NavigationCallback callback) {
-        if (callback != null) {
+        final Object[] object = new Object[1];
+        if (!routerForward.isGreenChannel()) {
             InterceptorImpl.onInterceptions(routerForward, new InterceptorCallback() {
                 @Override
                 public void onNext(RouterForward routerForward) {
-                    _navigation(context, routerForward, requestCode, callback);
+                    object[0] = _navigation(context, routerForward, requestCode, callback);
                 }
 
                 @Override
@@ -191,10 +193,9 @@ public class EasyRouter {
                 }
             });
         }else{
-
-            return _navigation(context, routerForward, requestCode, callback);
+            object[0] = _navigation(context, routerForward, requestCode, null);
         }
-        return null;
+        return object[0];
     }
 
     /**
@@ -345,6 +346,8 @@ public class EasyRouter {
                 }
                 break;
             }
+            case PROVIDER:
+                return routerForward.getProvider();
             default:
                 break;
         }
@@ -377,23 +380,23 @@ public class EasyRouter {
             //类 要跳转的activity 或IService实现类
             routerForward.setDestination(routeMeta.getDestination());
             routerForward.setType(routeMeta.getType());
-//            switch (routeMeta.getType()) {
-//                case SERVICE:
-//                    Class<?> destination = routeMeta.getDestination();
-//                    IService service = DataWarehouse.services.get(destination);
-//                    if (null == service) {
-//                        try {
-//                            service = (IService) destination.getConstructor().newInstance();
-//                            DataWarehouse.services.put(destination, service);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    routerForward.setService(service);
-//                    break;
-//                default:
-//                    break;
-//            }
+            switch (routeMeta.getType()) {
+                case PROVIDER:
+                    Class<?> destination = routeMeta.getDestination();
+                    IProvider provider = DataWarehouse.providers.get(destination);
+                    if (null == provider) {
+                        try {
+                            provider = (IProvider) destination.getConstructor().newInstance();
+                            DataWarehouse.providers.put(destination, provider);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    routerForward.setProvider(provider);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

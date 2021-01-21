@@ -4,7 +4,7 @@ package com.dj.easyrouter.data;
 import com.dj.easyrouter.inter.IInterceptor;
 import com.dj.easyrouter.model.EasyRouteMeta;
 import com.dj.easyrouter.inter.IRouteGroup;
-import com.dj.easyrouter.inter.IService;
+import com.dj.easyrouter.inter.IProvider;
 import com.dj.easyrouter.utils.UniqueKeyTreeMap;
 
 import java.util.ArrayList;
@@ -26,10 +26,8 @@ public class DataWarehouse {
      */
     public static Map<String, EasyRouteMeta> routes = new HashMap<>();
 
-    /**
-     * group 映射表 保存组中的所有数据
-     */
-    public static Map<Class<?>, IService> services = new HashMap<>();
+    public static Map<Class<?>, IProvider> providers = new HashMap<>();
+    public static Map<String, EasyRouteMeta> providersIndex = new HashMap<>();
 
     /**
      * 以键值对优先级的方式保存拦截器对象
@@ -39,4 +37,16 @@ public class DataWarehouse {
      * 以集合的方式保存所有拦截器对象
      */
     public static List<IInterceptor> interceptors = new ArrayList<>();
+
+    /**
+     * 清除所有数据缓存，包括路由表
+     */
+    public static void clear() {
+        routes.clear();
+        groupsIndex.clear();
+        providers.clear();
+        providersIndex.clear();
+        interceptors.clear();
+        interceptorsIndex.clear();
+    }
 }

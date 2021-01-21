@@ -8,7 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 
 import com.dj.easyrouter.EasyRouter;
 import com.dj.easyrouter.callback.NavigationCallback;
-import com.dj.easyrouter.inter.IService;
+import com.dj.easyrouter.inter.IProvider;
 
 import java.util.ArrayList;
 
@@ -22,8 +22,11 @@ public class RouterForward extends EasyRouteMeta{
     //进场、离场动画
     private int enterAnim;
     private int exitAnim;
-
-    private IService service;
+    /**
+     * 是否是绿色通道（不需要走拦截器）
+     */
+    private boolean greenChannel;
+    private IProvider provider;
 
     public RouterForward(String path, String group) {
         this(path, group, null);
@@ -81,6 +84,16 @@ public class RouterForward extends EasyRouteMeta{
     public int getExitAnim() {
         return exitAnim;
     }
+
+    public boolean isGreenChannel() {
+        return greenChannel;
+    }
+
+    public RouterForward greenChannel() {
+        this.greenChannel = true;
+        return this;
+    }
+
 
     public RouterForward withString(@Nullable String key, @Nullable String value) {
         mBundle.putString(key, value);
@@ -233,12 +246,12 @@ public class RouterForward extends EasyRouteMeta{
         return optionsCompat;
     }
 
-    public IService getService() {
-        return service;
+    public IProvider getProvider() {
+        return provider;
     }
 
-    public void setService(IService service) {
-        this.service = service;
+    public void setProvider(IProvider provider) {
+        this.provider = provider;
     }
 
     /**
