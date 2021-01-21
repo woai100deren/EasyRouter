@@ -9,7 +9,7 @@ import javax.lang.model.element.Element;
  */
 public class EasyRouteMeta {
     public enum Type {
-        ACTIVITY, SERVICE
+        ACTIVITY, SERVICE,FRAGMENT
     }
 
     private Type type;

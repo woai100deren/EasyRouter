@@ -3,12 +3,10 @@ package com.dj.easyrouter.model;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 
 import com.dj.easyrouter.EasyRouter;
-import com.dj.easyrouter.R;
 import com.dj.easyrouter.callback.NavigationCallback;
 import com.dj.easyrouter.inter.IService;
 

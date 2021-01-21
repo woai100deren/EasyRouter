@@ -174,3 +174,27 @@
       .navigationForResult(MainActivity.this,123);
   ```
 
+- 对`Fragment`的支持：
+
+  ```java
+  Fragment fragment = (Fragment) EasyRouter.getInstance()
+      .build("/module1/business1Fragment")
+      .withString("value","123456")
+      .navigation();
+  ```
+
+  通过上述方式获取到fragment对象，获取到的`fragment`是`android.app.Fragment`还是`android.support.v4.app.Fragment`，需要看对方创建的Fragment是什么类型。
+
+- 调用`service`
+
+  启动：
+
+  ```java
+  EasyRouter.getInstance().build("/module1/myService").navigation();
+  ```
+
+  停止：
+
+  ```java
+  EasyRouter.getInstance().build("/module1/myService").stopNavigation();
+  ```

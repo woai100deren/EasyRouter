@@ -1,10 +1,10 @@
 package com.dj.easyrouter.simple;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -59,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EasyRouter.getInstance().build("/module1/myService").stopNavigation();
+            }
+        });
+        findViewById(R.id.getBm1Fragment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,FragmentActivity.class));
             }
         });
     }

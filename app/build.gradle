@@ -3,17 +3,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+    buildToolsVersion BUILDTOOLS_VERSION
 
     defaultConfig {
         applicationId "com.dj.easyrouter.simple"
-        minSdkVersion 19
-        targetSdkVersion 30
+        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         //给注解处理器传参数，key：moduleName，value：project.getName()。project.getName()获取到的就是当前module的名称，比如现在就是app。
         //注意，key的名称由于在注解处理器中写死了为“moduleName”，所以这里写moduleName。除非两边都改。
@@ -37,13 +35,9 @@ android {
 }
 
 dependencies {
-
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    implementation "com.android.support:support-v4:${SUPPORT_LIB_VERSION}"
+    implementation "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
 
     implementation project(":easyRouter-core")
     annotationProcessor project(":easyRouter-compiler")

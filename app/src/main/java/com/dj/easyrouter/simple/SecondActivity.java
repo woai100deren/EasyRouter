@@ -2,9 +2,8 @@ package com.dj.easyrouter.simple;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
-
-import androidx.annotation.Nullable;
 
 import com.dj.easyrouter.annotation.EasyRoute;
 

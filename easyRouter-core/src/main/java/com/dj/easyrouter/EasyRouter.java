@@ -2,14 +2,14 @@ package com.dj.easyrouter;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
-
-import androidx.core.app.ActivityCompat;
 
 import com.dj.easyrouter.callback.InterceptorCallback;
 import com.dj.easyrouter.callback.NavigationCallback;
@@ -20,7 +20,6 @@ import com.dj.easyrouter.model.EasyRouteMeta;
 import com.dj.easyrouter.model.RouterForward;
 import com.dj.easyrouter.inter.IRouteGroup;
 import com.dj.easyrouter.inter.IRouteRoot;
-import com.dj.easyrouter.inter.IService;
 import com.dj.easyrouter.utils.ClassUtil;
 
 import java.lang.reflect.InvocationTargetException;
@@ -329,6 +328,21 @@ public class EasyRouter {
                     }
                 });
 //                return routerForward.getService();
+                break;
+            }
+            case FRAGMENT: {
+                Class<?> fragmentMeta = routerForward.getDestination();
+                try {
+                    Object instance = fragmentMeta.getConstructor().newInstance();
+                    if (instance instanceof Fragment) {
+                        ((Fragment) instance).setArguments(routerForward.getExtras());
+                    } else if (instance instanceof android.support.v4.app.Fragment) {
+                        ((android.support.v4.app.Fragment) instance).setArguments(routerForward.getExtras());
+                    }
+                    return instance;
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 break;
             }
             default:
