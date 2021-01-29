@@ -363,7 +363,7 @@ public class EasyRouter {
         if (null == routeMeta) {
             Class<? extends IRouteGroup> groupMeta = DataWarehouse.groupsIndex.get(routerForward.getGroup());
             if (null == groupMeta) {
-                throw new NoRouteFoundException("没找到对应路由：分组=" + routerForward.getGroup() + "   路径=" + routerForward.getPath());
+                throw new NoRouteFoundException("没有找到对应路由：分组=" + routerForward.getGroup() + "   路径=" + routerForward.getPath());
             }
             IRouteGroup iGroupInstance;
             try {

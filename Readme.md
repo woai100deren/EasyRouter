@@ -251,3 +251,12 @@
   helloService.sayHello("world");
   ```
 
+##### 6.混淆
+
+ - 保留框架自动生成的class类
+
+   ```
+   -keep public class com.dj.easyrouter.routers.*
+   ```
+
+   
