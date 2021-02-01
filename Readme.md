@@ -1,3 +1,20 @@
+### 框架使用
+
+```groovy
+allprojects {
+    repositories {
+    	......
+        maven { url "https://jitpack.io" }
+    }
+}
+
+
+implementation 'com.github.woai100deren:EasyRouter:1.0.0'
+annotationProcessor 'com.github.woai100deren:EasyRouter:1.0.0'
+```
+
+
+
 ### 说明
 
 **一、工程说明：**
