@@ -1,3 +1,6 @@
+[![](https://jitpack.io/v/woai100deren/EasyRouter.svg)](https://jitpack.io/#woai100deren/EasyRouter)
+
+
 ### 框架使用
 
 ```groovy
